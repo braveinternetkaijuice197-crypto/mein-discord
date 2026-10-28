@@ -4,114 +4,102 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nachtwache – Hosting für Discord-Bots und Websites</title>
-<meta name="description" content="Dein Discord-Bot und deine Website laufen rund um die Uhr, auch wenn dein PC aus ist.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Instrument+Sans:wght@400;600&display=swap">
 <style>
-:root{--bg:#f3f1fb;--ink:#1d1b3a;--muted:#5d5a7e;--brand:#4b4fd8;--brand-ink:#fff;--sun:#ffc83d;--panel:#1d1b3a;--panel-ink:#e9e7ff;--ok:#5de6a0;--line:#d9d5f2}
-@media (prefers-color-scheme:dark){:root{--bg:#14132b;--ink:#ecebff;--muted:#a9a6d0;--brand:#8a8dff;--brand-ink:#14132b;--panel:#0d0c1f;--line:#2e2c55}}
+:root{--bg:#f3f1fb;--ink:#1d1b3a;--muted:#5d5a7e;--brand:#4b4fd8;--on:#fff;--sun:#ffc83d;--field:#fff;--line:#d9d5f2}
+@media (prefers-color-scheme:dark){:root{--bg:#14132b;--ink:#ecebff;--muted:#a9a6d0;--brand:#8a8dff;--on:#14132b;--field:#1d1b3a;--line:#2e2c55}}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.6 "Instrument Sans",system-ui,sans-serif}
-h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.05;margin:0}
-a{color:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.6 system-ui,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:1.25rem}
+h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.05;margin:2rem 0 .5rem}
+h2{font-size:1.6rem;margin:0 0 .3rem}
+p{color:var(--muted);margin:.3rem 0}
+section{padding:2rem 0;border-top:2px solid var(--line)}
+label{display:block;font-weight:600;margin:1rem 0 .3rem}
+input,select{width:100%;font:inherit;color:var(--ink);background:var(--field);border:2px solid var(--line);border-radius:.5rem;padding:.65rem .8rem}
+.cmd{display:grid;grid-template-columns:1fr 2fr;gap:.6rem;margin-bottom:.6rem}
+button{margin-top:1.1rem;padding:.8rem 1.3rem;border:0;border-radius:.6rem;background:var(--brand);color:var(--on);font-family:inherit;font-weight:600;font-size:1rem;cursor:pointer}
 :focus-visible{outline:3px solid var(--sun);outline-offset:3px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 1.25rem}
-header{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0}
-.logo{font:800 1.4rem "Bricolage Grotesque",sans-serif;text-decoration:none}
-nav a{margin-left:1.25rem;text-decoration:none;color:var(--muted)}
-nav a:hover{color:var(--ink)}
-.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:center;padding:3rem 0 4.5rem}
-.hero h1{font-size:clamp(2.4rem,6vw,4.4rem);font-weight:800;letter-spacing:-.02em}
-.hero p{max-width:46ch;color:var(--muted);margin:1.25rem 0 2rem}
-.btn{display:inline-block;padding:.85rem 1.4rem;border-radius:.6rem;background:var(--brand);color:var(--brand-ink);font-weight:600;text-decoration:none}
-.btn.ghost{background:none;color:var(--ink);border:2px solid var(--line);margin-left:.5rem}
-.btn:hover{filter:brightness(1.1)}
-.board{background:var(--panel);color:var(--panel-ink);border-radius:1rem;padding:1.25rem;box-shadow:0 1.5rem 3rem -1.5rem rgba(29,27,58,.6)}
-.board h2{font-size:.95rem;color:var(--sun);margin-bottom:.75rem}
-.row{display:grid;grid-template-columns:auto 1fr auto;gap:.75rem;align-items:center;padding:.7rem 0;border-top:1px solid rgba(255,255,255,.12)}
-.dot{width:.7rem;height:.7rem;border-radius:50%;background:var(--ok);animation:pulse 2.4s ease-in-out infinite}
-.row small{display:block;color:#a9a6d0}
-.up{font-variant-numeric:tabular-nums;color:var(--ok)}
-@keyframes pulse{50%{opacity:.35}}
-section{padding:3.5rem 0}
-section h2{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:1.5rem}
-.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem 2.5rem}
-.feat h3{font-size:1.2rem;margin-bottom:.4rem}
-.feat p{margin:0;color:var(--muted)}
-.table{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:560px}
-th,td{text-align:left;padding:1rem .75rem;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-family:"Bricolage Grotesque",sans-serif;font-size:1.15rem}
-.price{font:800 1.5rem "Bricolage Grotesque",sans-serif}
-tr.pick td,tr.pick th{background:color-mix(in srgb,var(--sun) 22%,transparent)}
-details{border-bottom:1px solid var(--line);padding:1rem 0}
-summary{cursor:pointer;font-weight:600}
-details p{color:var(--muted);margin:.6rem 0 0}
-footer{padding:2.5rem 0 3rem;color:var(--muted);font-size:.9rem}
-@media(max-width:800px){.hero{grid-template-columns:1fr}.btn.ghost{margin:.5rem 0 0}}
-@media(prefers-reduced-motion:reduce){.dot{animation:none}html{scroll-behavior:auto}}
+.out{margin-top:.8rem;font-weight:600;word-break:break-word;min-height:1.5rem}
+button:disabled{opacity:.45;cursor:not-allowed}
+.state{margin:1.2rem 0;padding:.7rem 1rem;border-radius:.5rem;border-left:6px solid var(--sun);background:var(--field);font-weight:600}
+.state.on{border-left-color:#2fb26b}
+@media(max-width:600px){.cmd{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header>
-  <a class="logo" href="#">Nachtwache</a>
-  <nav><a href="#leistungen">Leistungen</a><a href="#preise">Preise</a><a href="#faq">FAQ</a></nav>
-</header>
+<h1>Bot und Website online bringen.</h1>
+<p>Gib deinen Bot-Token oder den Link zu deinem GitHub-Repository ein. Den Rest übernimmt Nachtwache.</p>
 
-<main>
-<div class="hero">
-  <div>
-    <h1>Dein Bot läuft. Auch wenn dein PC aus ist.</h1>
-    <p>Hoste Discord-Bots und Websites an einem Ort. Code hochladen oder per GitHub verbinden, Start drücken, fertig.</p>
-    <a class="btn" href="#preise">Plan wählen</a><a class="btn ghost" href="#leistungen">Was ist drin?</a>
-  </div>
-  <div class="board" aria-label="Beispiel einer Projektübersicht">
-    <h2>Deine Projekte</h2>
-    <div class="row"><span class="dot"></span><div>ticket-helper<small>Discord-Bot · Node.js</small></div><span class="up">99,98 %</span></div>
-    <div class="row"><span class="dot"></span><div>musik-bot<small>Discord-Bot · Python</small></div><span class="up">99,95 %</span></div>
-    <div class="row"><span class="dot"></span><div>clan-seite.de<small>Website · statisch</small></div><span class="up">100 %</span></div>
-  </div>
+<div class="state" id="state" role="status">Verbindung zum Server wird geprüft…</div>
+
+<section>
+  <h2>Discord-Bot hosten</h2>
+  <p>Dein Token wird verschlüsselt gespeichert. Gib ihn niemals an Orte weiter, denen du nicht vertraust.</p>
+  <label for="token">Bot-Token</label>
+  <input id="token" type="password" autocomplete="off">
+  <label>Befehle und Antworten (bis zu drei)</label>
+  <div class="cmd"><input aria-label="Befehl 1" placeholder="ping" value="ping"><input aria-label="Antwort 1" value="Pong!"></div>
+  <div class="cmd"><input aria-label="Befehl 2" placeholder="regeln"><input aria-label="Antwort 2" placeholder="Antwort"></div>
+  <div class="cmd"><input aria-label="Befehl 3" placeholder="hilfe"><input aria-label="Antwort 3" placeholder="Antwort"></div>
+  <button id="botGo" type="button">Bot starten</button>
+  <div class="out" id="botOut" role="status"></div>
+</section>
+
+<section>
+  <h2>Website hosten</h2>
+  <p>Das Repository muss öffentlich sein und im obersten Ordner eine index.html haben.</p>
+  <label for="url">GitHub-Link</label>
+  <input id="url" placeholder="https://github.com/name/repo">
+  <button id="siteGo" type="button">Website online stellen</button>
+  <div class="out" id="siteOut" role="status"></div>
+</section>
+
+<section>
+  <h2>Bot oder Website entfernen</h2>
+  <label for="kind">Was?</label>
+  <select id="kind"><option value="bots">Bot</option><option value="sites">Website</option></select>
+  <label for="did">ID</label><input id="did">
+  <label for="dkey">Schlüssel</label><input id="dkey" type="password" autocomplete="off">
+  <button id="delGo" type="button">Entfernen</button>
+  <div class="out" id="delOut" role="status"></div>
+</section>
 </div>
-
-<section id="leistungen">
-  <h2>Alles, was ein Bot und eine Website brauchen</h2>
-  <div class="feat">
-    <div><h3>24/7 online</h3><p>Dein Bot startet nach einem Absturz automatisch neu.</p></div>
-    <div><h3>Deploy per GitHub</h3><p>Push auf deinen Branch, und die neue Version geht live.</p></div>
-    <div><h3>Node.js und Python</h3><p>Wähle die Laufzeit, die zu deinem Bot passt.</p></div>
-    <div><h3>Websites mit Domain</h3><p>Eigene Domain verbinden, HTTPS ist automatisch aktiv.</p></div>
-    <div><h3>Live-Konsole</h3><p>Logs ansehen, Bot starten, stoppen oder neu starten.</p></div>
-    <div><h3>Geheime Variablen</h3><p>Bot-Token und Schlüssel liegen sicher außerhalb deines Codes.</p></div>
-  </div>
-</section>
-
-<section id="preise">
-  <h2>Preise</h2>
-  <div class="table">
-  <table>
-    <thead><tr><th>Plan</th><th>Für</th><th>Ressourcen</th><th>Preis pro Monat</th></tr></thead>
-    <tbody>
-      <tr><th>Bot Start</th><td>Ein kleiner Discord-Bot</td><td>256 MB RAM, 1 Bot</td><td class="price">2 €</td></tr>
-      <tr class="pick"><th>Bot Plus</th><td>Größere Server, mehrere Bots</td><td>1 GB RAM, 3 Bots</td><td class="price">5 €</td></tr>
-      <tr><th>Website</th><td>Seiten und kleine Web-Apps</td><td>5 GB Speicher, 1 Domain</td><td class="price">4 €</td></tr>
-    </tbody>
-  </table>
-  </div>
-  <p style="margin-top:1.5rem"><a class="btn" href="mailto:kontakt@example.com">Anfrage senden</a></p>
-</section>
-
-<section id="faq">
-  <h2>Häufige Fragen</h2>
-  <details><summary>Kann ich meinen Bot von GitHub deployen?</summary><p>Ja. Verbinde dein Repository, wähle einen Branch, und jeder Push startet ein neues Deployment.</p></details>
-  <details><summary>Welche Sprachen werden unterstützt?</summary><p>Node.js und Python für Bots, HTML, CSS und JavaScript für Websites.</p></details>
-  <details><summary>Was passiert, wenn mein Bot abstürzt?</summary><p>Er wird automatisch neu gestartet, und der Fehler steht in deinen Logs.</p></details>
-</section>
-</main>
-
-<footer>© <span id="y"></span> Nachtwache · <a href="#">Impressum</a> · <a href="#">Datenschutz</a></footer>
-</div>
-<script>document.getElementById("y").textContent=new Date().getFullYear()</script>
+<script>
+// Adresse deines Servers. Leer lassen, wenn diese Seite vom Server selbst ausgeliefert wird.
+// Auf GitHub Pages hier die HTTPS-Adresse deines Servers eintragen, z. B. 'https://hosting.deine-domain.de'
+const SERVER_URL='';
+const $=id=>document.getElementById(id);
+const base=SERVER_URL.replace(/\/$/,'');
+const okToSend=base?(base.startsWith('https://')||/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(base)):(location.protocol==='https:'||/^(localhost|127\.0\.0\.1)$/.test(location.hostname));
+function setState(ok,text){const b=$('state');b.textContent=text;b.className='state '+(ok?'on':'');document.querySelectorAll('button').forEach(x=>x.disabled=!ok)}
+(async()=>{
+  if(!okToSend){setState(false,'Token und Links werden nur über eine HTTPS-Verbindung gesendet. Dein Server ist so nicht erreichbar.');return}
+  try{const d=await(await fetch(base+'/api/health')).json();setState(!!d.ok,d.ok?'Server verbunden':'Kein Server verbunden.')}
+  catch{setState(false,'Kein Server verbunden. Token und Links können gerade nicht gesendet werden.')}
+})();
+async function call(url,opt,out){
+  out.textContent='Einen Moment…';
+  try{
+    const r=await fetch(base+url,opt),d=await r.json();
+    if(!r.ok){out.textContent=d.error||'Fehler.';return null}
+    return d;
+  }catch{out.textContent='Der Server antwortet nicht.';return null}
+}
+const json=b=>({method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});
+$('botGo').onclick=async()=>{
+  const commands=[...document.querySelectorAll('.cmd')].map(r=>({name:r.children[0].value,reply:r.children[1].value}));
+  const d=await call('/api/bots',json({token:$('token').value.trim(),commands}),$('botOut'));
+  if(d){$('token').value='';$('botOut').textContent='Dein Bot ist online. ID: '+d.id+' · Schlüssel: '+d.key+' · Speichere beides jetzt, der Schlüssel wird nicht noch einmal angezeigt.'}
+};
+$('siteGo').onclick=async()=>{
+  const d=await call('/api/sites',json({url:$('url').value}),$('siteOut'));
+  if(d){$('siteOut').textContent='Deine Website: '+(base||location.origin)+d.url+' · ID: '+d.id+' · Schlüssel: '+d.key+' · Speichere beides jetzt.'}
+};
+$('delGo').onclick=async()=>{
+  const d=await call('/api/'+$('kind').value+'/'+encodeURIComponent($('did').value.trim()),{method:'DELETE',headers:{'x-key':$('dkey').value.trim()}},$('delOut'));
+  if(d)$('delOut').textContent='Entfernt.';
+};
+</script>
 </body>
 </html>
